@@ -170,3 +170,4 @@ The app integrates with the FastAPI backend at `NEXT_PUBLIC_API_URL`.
 - All API calls include JWT token when available
 - Error handling with user-friendly messages
 - Loading states on all async operations
+# Force rebuild Sat Feb  7 04:42:04 PST 2026
