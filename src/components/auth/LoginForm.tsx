@@ -18,7 +18,7 @@ export function LoginForm() {
     setLoading(true);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://talibhussain-todo-app-deploy.hf.space'}/api/auth/login`, {
+      const response = await fetch('https://talibhussain-todo-app-deploy.hf.space/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
