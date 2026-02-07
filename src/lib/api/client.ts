@@ -11,9 +11,9 @@ interface FetchOptions extends RequestInit {
 async function fetchWithAuth(endpoint: string, options: FetchOptions = {}) {
   const { requiresAuth = true, ...fetchOptions } = options;
 
-  const headers: HeadersInit = {
+  const headers: Record<string, string> = {
     'Content-Type': 'application/json',
-    ...fetchOptions.headers,
+    ...(fetchOptions.headers as Record<string, string>),
   };
 
   // Add Authorization header if authentication is required
