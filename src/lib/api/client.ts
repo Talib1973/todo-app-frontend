@@ -55,36 +55,36 @@ async function fetchWithAuth(endpoint: string, options: FetchOptions = {}) {
 export const tasksApi = {
   list: async (completed?: boolean) => {
     const query = completed !== undefined ? `?completed=${completed}` : '';
-    return fetchWithAuth(`/api/tasks${query}`);
+    return fetchWithAuth(`/api/tasks/${query}`);
   },
 
   get: async (taskId: string) => {
-    return fetchWithAuth(`/api/tasks/${taskId}`);
+    return fetchWithAuth(`/api/tasks/${taskId}/`);
   },
 
   create: async (data: { title: string; description?: string; completed?: boolean }) => {
-    return fetchWithAuth('/api/tasks', {
+    return fetchWithAuth('/api/tasks/', {
       method: 'POST',
       body: JSON.stringify(data),
     });
   },
 
   update: async (taskId: string, data: { title: string; description?: string; completed?: boolean }) => {
-    return fetchWithAuth(`/api/tasks/${taskId}`, {
+    return fetchWithAuth(`/api/tasks/${taskId}/`, {
       method: 'PUT',
       body: JSON.stringify(data),
     });
   },
 
   patch: async (taskId: string, data: Partial<{ title: string; description: string; completed: boolean }>) => {
-    return fetchWithAuth(`/api/tasks/${taskId}`, {
+    return fetchWithAuth(`/api/tasks/${taskId}/`, {
       method: 'PATCH',
       body: JSON.stringify(data),
     });
   },
 
   delete: async (taskId: string) => {
-    return fetchWithAuth(`/api/tasks/${taskId}`, {
+    return fetchWithAuth(`/api/tasks/${taskId}/`, {
       method: 'DELETE',
     });
   },
