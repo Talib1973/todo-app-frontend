@@ -7,13 +7,21 @@ import { Button } from '../ui/Button';
 
 export function SignupForm() {
   const router = useRouter();
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<{ email?: string; password?: string; general?: string }>({});
+  const [errors, setErrors] = useState<{ name?: string; email?: string; password?: string; general?: string }>({});
 
   const validateForm = () => {
     const newErrors: typeof errors = {};
+
+    // Name validation
+    if (!name) {
+      newErrors.name = 'Name is required';
+    } else if (name.trim().length < 2) {
+      newErrors.name = 'Name must be at least 2 characters';
+    }
 
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -50,7 +58,7 @@ export function SignupForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ name, email, password }),
       });
 
       if (!response.ok) {
@@ -84,6 +92,16 @@ export function SignupForm() {
       )}
 
       <Input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        label="Name"
+        placeholder="Your full name"
+        error={errors.name}
+        disabled={loading}
+      />
+
+      <Input
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
@@ -107,7 +125,7 @@ export function SignupForm() {
         type="submit"
         variant="primary"
         loading={loading}
-        disabled={loading || !email || !password}
+        disabled={loading || !name || !email || !password}
         className="w-full"
       >
         Sign Up
