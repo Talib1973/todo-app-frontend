@@ -4,31 +4,25 @@
 
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ChatInterface } from '@/components/chat/ChatInterface';
 import { Container } from '@/components/layout/Container';
 import { Header } from '@/components/layout/Header';
 
-// Force dynamic rendering for this page
-export const dynamic = 'force-dynamic';
-
-export default function ChatPage() {
+function ChatPageInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
-  // Get conversation ID from URL query parameter
   const conversationId = searchParams.get('conversation');
 
   useEffect(() => {
-    // Check authentication
     const token = localStorage.getItem('access_token');
     const userData = localStorage.getItem('user');
 
     if (!token || !userData) {
-      // Redirect to login if not authenticated
       router.push('/login');
       return;
     }
@@ -56,7 +50,7 @@ export default function ChatPage() {
   }
 
   if (!user) {
-    return null; // Will redirect to login
+    return null;
   }
 
   return (
@@ -79,7 +73,6 @@ export default function ChatPage() {
             </button>
           </div>
 
-          {/* Chat Interface */}
           <div className="h-[calc(100vh-16rem)]">
             <ChatInterface
               userId={user.id}
@@ -87,7 +80,6 @@ export default function ChatPage() {
             />
           </div>
 
-          {/* Help text */}
           <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
             <h3 className="text-sm font-semibold text-blue-900 mb-2">
               💡 Tips for chatting with the assistant:
@@ -103,5 +95,17 @@ export default function ChatPage() {
         </div>
       </Container>
     </div>
+  );
+}
+
+export default function ChatPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    }>
+      <ChatPageInner />
+    </Suspense>
   );
 }
