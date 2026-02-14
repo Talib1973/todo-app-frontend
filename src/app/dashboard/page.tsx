@@ -92,7 +92,16 @@ export default function DashboardPage() {
 
       <main className="flex-1 py-8">
         <Container>
-          <h1 className="text-3xl font-bold text-gray-900 mb-8">My Tasks</h1>
+          <div className="flex items-center justify-between mb-8">
+            <h1 className="text-3xl font-bold text-gray-900">My Tasks</h1>
+            <button
+              onClick={() => router.push('/chat')}
+              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+            >
+              <span className="text-xl">💬</span>
+              <span className="font-medium">Chat Assistant</span>
+            </button>
+          </div>
 
           {error && (
             <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800">
