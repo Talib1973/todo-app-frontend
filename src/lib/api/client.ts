@@ -2,8 +2,7 @@
  * Centralized API client with JWT authentication
  */
 
-// Hardcoded for production - environment variables not working
-const API_BASE_URL = 'https://talibhussain-todo-app-deploy.hf.space';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
 interface FetchOptions extends RequestInit {
   requiresAuth?: boolean;
